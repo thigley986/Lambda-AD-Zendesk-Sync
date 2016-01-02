@@ -11,6 +11,8 @@ Requirements
   - AWS S3 Bucket per ZenDesk Instance
   - AWS Toolkit for Windows installed on Domain Controller
   - PowerShell v3 or Above
+  - Zdsk API for Python by by Brent Woodruff (https://github.com/fprimex/zdesk)
+  - Boto3 AWS SDK for Python (https://github.com/boto/boto3)
 
 Legacy Servers may upgrade PowerShell to v3 by installing .NET Framework 4.5 and the Windows Management Framework 3.0 here:
   - Windows 2008 R2: https://www.microsoft.com/en-us/download/confirmation.aspx?id=34595&6B49FDFB-8E5B-4B07-BC31-15695C5A2143=1
