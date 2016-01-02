@@ -10,7 +10,7 @@ Requirements
   - AWS Lambda Environment (Python 2.7) per ZenDesk Instance
   - AWS S3 Bucket per ZenDesk Instance
   - AWS Toolkit for Windows installed on Domain Controller
-  - PowerShell v3 or Above
+  - PowerShell v3 or Above set to Unrestricted execution mode
   - Zdsk API for Python by by Brent Woodruff (https://github.com/fprimex/zdesk)
   - Boto3 AWS SDK for Python (https://github.com/boto/boto3)
 
