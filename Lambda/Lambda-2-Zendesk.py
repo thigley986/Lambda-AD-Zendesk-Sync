@@ -73,7 +73,7 @@ def lambda_handler(event, context):
             try:
                 print(new_user)
                 result = zendesk.user_create_or_update(data=new_user)
-                sleep(0.1)
+                sleep(0.03)
 
                 #Print Generated User ID
                 user_id = get_id_from_url(result)
