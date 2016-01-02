@@ -1,5 +1,3 @@
-#Sync from Lambda function to Zendesk
-
 #Amazon S3 Bucket to Zendesk Import Process
 
 from __future__ import print_function
@@ -7,17 +5,22 @@ import sys
 from zdesk import Zendesk
 from zdesk import get_id_from_url
 import boto3
+import json
 import collections
+from time import sleep
+
+#Define S3 Bucket
+bucket = "<BUCKET_NAME>"
 
 #Define ZenDesk API Information
 config = {
-    'zdesk_email': 'zendesk_email@zendesk.com',
-    'zdesk_password': 'zendesk_password_or_token',
-    'zdesk_url': 'URL',
-    'zdesk_token': True
+    'zdesk_email': '<ZENDESK_USER_EMAIL>',
+    'zdesk_password': '<ZENDESK_USER_PASSWORD_OR_TOKEN>',
+    'zdesk_url': '<ZENDESK_URL>',
+    'zdesk_token': <'TRUE OR FALSE'>
 }
 
-#Create client with S3
+#Connect to S3 with Boto3
 s3 = boto3.client('s3')
 
 #Create ZenDesk Connection
@@ -32,27 +35,53 @@ def lambda_handler(event, context):
         name = user['name']
         print(name)
 
-    #Create User
-    print("Adding Users")
-    user_name = "Test"
-    user_email = "Test@Test.com"
-    user_phone = "(222) 222-2222"
+    #Find Most Recently Modified Active Users File from S3
+    bucket_list = s3.list_objects(Bucket=bucket).get('Contents', [])
+    print(bucket_list)
 
-    new_user = {
-        'user': {
-            'name': user_name,
-            'email': user_email,
-            'phone': user_phone,
-        }
-    }
-    try:
-        result = zendesk.user_create_or_update(data=new_user)
+    for file in bucket_list:
+        file_name = file['Key']
 
-        #Print Generated User ID
-        user_id = get_id_from_url(result)
-        print(user_id)
-    
-    except Exception, e:
-        print ("Error Encountered:")
-        print (e)
+        try:
+            object = s3.get_object(Bucket=bucket,Key=file_name)['Body']
+            print(object)
 
+        except Exception, e:
+            print ("Error Encountered while downloading file.")
+            print (e)
+            exit()
+
+        users = json.load(object)
+        print(users)   
+
+        #Create and Update User
+        print("Creating and Updating Users")
+        
+        for user in users:
+            user_name = user['DisplayName']
+            user_email = user['EmailAddress']
+            user_phone = user['OfficePhone']
+
+            new_user = {
+                'user': {
+                    'name': user_name,
+                    'email': user_email,
+                    'phone': user_phone,
+                }
+            }
+
+            try:
+                print(new_user)
+                result = zendesk.user_create_or_update(data=new_user)
+                sleep(0.1)
+
+                #Print Generated User ID
+                user_id = get_id_from_url(result)
+                print(user_id)
+            
+            except Exception, e:
+                print ("Error Encountered:")
+                print (e)
+
+        print("Deleting File")
+        s3.delete_object(Bucket=bucket,Key=file_name)
