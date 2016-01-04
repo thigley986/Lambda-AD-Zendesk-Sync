@@ -7,6 +7,7 @@ The purpose of this project is to sync Active Directory users and user informati
   - Lambda function to sync S3 bucket data to ZenDesk users
 
 Requirements
+  - Zendesk Account with Administrator-level access
   - AWS Lambda Environment (Python 2.7) per ZenDesk Instance
   - AWS S3 Bucket per ZenDesk Instance
   - AWS Tools for Windows PowerShell installed on Domain Controller (https://aws.amazon.com/powershell/)
@@ -21,10 +22,12 @@ Legacy Servers may upgrade PowerShell to v3 by installing .NET Framework 4.5 and
   - Windows 2008 (64-bit): https://download.microsoft.com/download/E/7/6/E76850B8-DA6E-4FF5-8CCE-A24FC513FD16/Windows6.0-KB2506146-x64.msu
 
 Installation (Lambda)
+  - Create an AWS S3 bucket
+  - Create a ZenDesk API token (https://developer.zendesk.com/rest_api/docs/core/introduction#api-token)
   - Download Lambda-2-Zendesk.py to a folder
+  - Modify Lambda-2-Zendesk.py to include S3 bucket and ZenDesk configuration
   - Download Zdsk API and dependencies to the same folder using command: pip install requests pyopenssl ndg-httpsclient pyasn1 zdesk -t /path/to/project-dir
   - Download zdesk_api.py and replace the default zdesk_api.py file in the zdesk folder
-  - Create an AWS S3 bucket
   - ZIP the files in the directory (not the directory) and upload to an AWS Lambda Python 2.7 function
   - Set the execution policy to the IAM POLICY document in the Lambda project folder
   - Set Lambda function timeout to 300 seconds
