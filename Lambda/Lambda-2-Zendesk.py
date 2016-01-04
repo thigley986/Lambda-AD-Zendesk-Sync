@@ -20,6 +20,9 @@ config = {
     'zdesk_token': <'TRUE OR FALSE'>
 }
 
+#Define telephone country code (if Active Directory numbers formatted without code)
+telephone_prefix = "1"
+
 #Connect to S3 with Boto3
 s3 = boto3.client('s3')
 
@@ -66,7 +69,7 @@ def lambda_handler(event, context):
                 'user': {
                     'name': user_name,
                     'email': user_email,
-                    'phone': user_phone,
+                    'phone': "%s%s" % (telephone_prefix, user_phone),
                 }
             }
 
