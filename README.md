@@ -30,7 +30,7 @@ Installation (Lambda)
   - Download zdesk_api.py and replace the default zdesk_api.py file in the zdesk folder
   - ZIP the files in the directory (not the directory) and upload to an AWS Lambda Python 2.7 function
   - Name your Lambda function handled Lambda-2-Zendesk.lambda_handler
-  - Set the execution policy to the IAM POLICY document in the Lambda project folder
+  - Choose S3 Execution Role, Create a new IAM role, and set the execution policy to the IAM POLICY document in the Lambda project folder
   - Set Lambda function timeout to 300 seconds
 
 Installation (Windows)
