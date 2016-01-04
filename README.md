@@ -31,6 +31,6 @@ Installation (Lambda)
 
 Installation (Windows)
   - Install AWS Tools for Windows PowerShell
-  - Create AWS IAM User with IAM POLICY document in the Windows project folder
+  - Create AWS IAM User with IAM POLICY document in the LDAP-2-S3 project folder
   - Download and modify AD-2-S3.ps1 to include S3 bucket Access Key, Secret Key, and Bucket
   - Schedule AD-2-S3.ps1 to run using Windows Task Scheduler or preferred RMM tool
