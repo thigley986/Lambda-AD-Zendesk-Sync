@@ -32,6 +32,8 @@ Installation (Lambda)
   - Name your Lambda function handler Lambda-2-Zendesk.lambda_handler
   - Choose S3 Execution Role, Create a new IAM role, and set the execution policy to the IAM POLICY document in the Lambda project folder
   - Set Lambda function timeout to 300 seconds
+  - Set Event Source to the S3 bucket for ObjectCreated | json
+  - (Optional) Set Event Source to S3 bucket for rate(1 hour)
 
 Installation (Windows)
   - Install AWS Tools for Windows PowerShell
